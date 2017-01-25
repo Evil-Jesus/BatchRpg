@@ -1,0 +1,7 @@
+PlayerName
+10
+1
+2
+3
+TrainingSword
+WoodenSword

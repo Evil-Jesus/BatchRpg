@@ -105,12 +105,16 @@ if /i "%WorldAction%"=="SaveGame" goto SaveGame
 if /i "%WorldAction%"=="LoadGame" goto LoadGame
 if /i "%WorldAction%"=="MainMenu" goto MainMenu
 
-if /i "%WorldAction%"=="Move" (
-echo. Event: %WorldEvent%
-type SaveGames\%saveName%\World\Events\%WorldEvent%.txt
-)
+if /i "%WorldAction%"=="Move" goto Move
 
 echo invalid action
+goto World
+
+:Move
+echo. Event: %WorldEvent%
+for /f "tokens=* skip=5" %%a in (SaveGames\%saveName%\World\Events\%WorldEvent%.txt) do (
+  echo. %%a
+)
 goto World
 
 :WorldHelp

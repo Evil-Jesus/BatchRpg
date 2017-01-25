@@ -1,0 +1,9 @@
+===============//World Help//===============
+help - displays this help menu
+
+NewGame - creates new game || NewGame does not save yourcurrent game,
+progress will be Deleted(!)
+
+SaveGame - goes to savemenu
+
+LoadGame - Goes to loadmenu

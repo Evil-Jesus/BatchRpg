@@ -1,8 +1,8 @@
 goblinM1
 eName=goblin
 /a eHp=100
-/a eAgi=2
 /a eStr=5
+/a eAgi=2
 /a eDef=2
 eLeftHand=Fist
 eRightHand=Fist
@@ -10,8 +10,8 @@ eRightHand=Fist
 banditM1
 eName=bandit
 /a eHp=150
-/a eAgi=6
 /a eStr=3
+/a eAgi=6
 /a eDef=2
 eLeftHand=IronSword
 eRightHand=WoodenShield

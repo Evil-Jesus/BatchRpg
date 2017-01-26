@@ -172,8 +172,17 @@ goto Battle
 
 :Battle
 cls
-echo.=========================// Battle //==========================
 echo.
+echo. ===*=*=*=*=*=*=*=*=*=*=*=*=*=*==// Battle //===*=*=*=*=*=*=*=*=*=*=*=*=*=*===
+echo.
+echo. =========// Actions //==========   /\  /\   ===========// Enemy //===========
+echo.                                =   \/  \/   = %eName%
+echo.        1. Attack               =   /\  /\   =   Hp: %eHp%
+echo.        2. Abilities            =  /  \/  \  =   Str: %eStr%, Agi %eAgi%, Def: %eDef%
+echo.        3. Inventory            =  \  /\  /  =   Main Hand: %eLeftHand%
+echo.                                =   \/  \/   =   Off Hand: %eRightHand%
+echo.                                =   /\  /\   =
+echo. ================================   \/  \/   =================================
 echo.
 set /p BattleAction=Action: 
 

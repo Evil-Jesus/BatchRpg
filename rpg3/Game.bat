@@ -175,6 +175,7 @@ cls
 echo.
 echo. ===*=*=*=*=*=*=*=*=*=*=*=*=*=*==// Battle //===*=*=*=*=*=*=*=*=*=*=*=*=*=*===
 echo.
+echo. =============================================================================
 echo. =========// Actions //==========   /\  /\   ===========// Enemy //===========
 echo.                                =   \/  \/   = %eName%
 echo.        1. Attack               =   /\  /\   =   Hp: %eHp%
@@ -183,92 +184,37 @@ echo.        3. Inventory            =  \  /\  /  =   Main Hand: %eLeftHand%
 echo.                                =   \/  \/   =   Off Hand: %eRightHand%
 echo.                                =   /\  /\   =
 echo. ================================   \/  \/   =================================
+echo. =============================================================================
+echo. ================================            ===========// You //=============
+echo.                                =            = %pName%
+echo.                                =            =   Hp: %pHp%
 echo.
 set /p BattleAction=Action: 
 
-if "%BattleAction%"=="Attack" goto attackInit
+if /i "%BattleAction%"=="Attack" (
+set BattleAction=none
+goto attackInit
+)
 
-if %eHp% LSS 0 goto BattleWon
-if %pHp% LSS 0 goto GameOver
 goto Battle
 
 :attackInit
-echo. %attacker% is attacking!
+set /a attackDMG=0
+set /a attackDMG=%pStr% * %pAgi%
+set /a eHp=%eHp% - %attackDMG%
+echo. %attackDMG%
 
-SET found1=0
-SET found2=0
+if "%eHp%" LEQ "0" goto BattleWon
+if "%pHp%" LEQ "0" goto GameOver
 
-set /a left=0
-set /a right=0
-set attackTarget=p
-
-SET inputfile=SaveGames\%saveName%\Items.txt
-
-SET /a ptStr=%pStr%
-SET /a ptAgi=%pAgi%
-SET /a ptDef=%pDef%
-SET /a etStr=%eStr%
-SET /a etAgi=%eAgi%
-SET /a etDef=%eDef%
-
-:attackLeft
-if %found1%==0 set attackTarget=p
-if %found1%==1 set attackTarget=e
-
-set searchstring1=!%attackTarget%LeftHand!
-
-SET linestoreadA=3
-SET found1=0
-FOR /F "tokens=*" %%L IN (%inputfile%) DO (
-    IF !found1!==1 (
-        IF !linestoreadA!==0 (
-			echo. %attackTarget%tStr%%L
-			echo. %attackTarget%tAgi%%L
-			echo. %attackTarget%tDef%%L
-			IF "%attackTarget%"=="p" goto attackLeft
-			goto attackRight
-		)
-        SET /a linestoread=!linestoreadA!-1
-        FOR /F "tokens=2 delims==" %%A IN ("%%L") DO (
-			if !linestoreadA!==2 set /a %attackTarget%tStr%%L
-			if !linestoreadA!==1 set /a %attackTarget%tAgi%%L
-			if !linestoreadA!==0 set /a %attackTarget%tDef%%L
-        )
-    )
-    IF "%%L"==%searchstring1% SET found1=1
-)
-
-:attackRight
-if %found2%==0 set attackTarget=p
-if %found%==1 set attackTarget=e
-
-set searchstring1=!%attackTarget%LeftHand!
-
-SET linestoreadA=3
-SET found2=0
-FOR /F "tokens=*" %%L IN (%inputfile%) DO (
-    IF !found2!==1 (
-        IF !linestoread!==0 GOTO attackApply
-        SET /a linestoread=!linestoread!-1
-        FOR /F "tokens=2 delims==" %%A IN ("%%L") DO (
-			if !linestoreadA!==2 set /a tStr%%L
-			if !linestoreadA!==1 set /a tAgi%%L
-			if !linestoreadA!==0 set /a tDef%%L
-        )
-    )
-    IF "%%L"==%searchstring1% SET found2=1
-)
-
-:attackApply
-echo. %ptStr%, %ptAgi%, %ptDef%
-echo. %etStr%, %etAgi%, %etDef%
-set /p dummy=Paused...
 goto Battle
 
 :BattleWon
+echo. Battle Won
 goto World
 
 :GameOver
+echo Game Over
 goto MainMenu
 
 :WorldHelp
